@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const AddTodoForm = () => {
   const [value, setValue] = useState("");
@@ -10,7 +10,10 @@ const AddTodoForm = () => {
 
   return (
     <div className="container">
-      <form onSubmit={onSubmit} className=" flex flex-row items-center justify-between mt-4">
+      <form
+        onSubmit={onSubmit}
+        className=" flex flex-row items-center justify-between mt-4"
+      >
         <label className="sr-only">Name</label>
         <input
           type="text"
