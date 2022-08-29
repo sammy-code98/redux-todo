@@ -9,8 +9,8 @@ const TodoList = () => {
 
   // now dipatch the api call here
   useEffect(() => {
-    dispatch(getTodoAsync);
-  }, [dispatch]);
+    dispatch(getTodoAsync());
+  },[dispatch]);
 
   // const todos = [
   //   { id: 1, title: "todo1", completed: true },

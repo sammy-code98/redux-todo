@@ -12,6 +12,21 @@ export const getTodoAsync = createAsyncThunk("todos/getTodoAsync", async () => {
   }
 });
 
+// creare todo and persist it on the api
+export const addTodoAsync = createAsyncThunk(
+  "todos/addTodoAsync",
+  async (payload) => {
+    const response = await fetch("http://localhost:7000/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: payload.title }),
+    });
+    if (response.ok) {
+      const todo = await response.json();
+      return { todo };
+    }
+  }
+);
 
 export const myTodoSlice = createSlice({
   name: "todos",
@@ -42,11 +57,14 @@ export const myTodoSlice = createSlice({
     },
   },
   // add extra reducers
-  extraReducers:{
-    [getTodoAsync.fulfilled] : (state, action)=>{
-      return action.payload.todos
-    }
-  }
+  extraReducers: {
+    [getTodoAsync.fulfilled]: (state, action) => {
+      return action.payload.todos;
+    },
+    [addTodoAsync.fulfilled]: (state, action) => {
+      state.push(action.payload.todo);
+    },
+  },
 });
 
 export const { addTodo, toggleComplete, deleteTodo } = myTodoSlice.actions;
