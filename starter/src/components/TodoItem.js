@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import {
   // toggleComplete,
-  deleteTodo,
+  // deleteTodo,
   toggleCompleteAsync,
+  deleteTodoAsync,
 } from "../redux/myTodoSlice";
 
 const TodoItem = ({ id, title, completed }) => {
@@ -13,7 +14,8 @@ const TodoItem = ({ id, title, completed }) => {
     dispatch(toggleCompleteAsync({ id, completed: !completed }));
   };
   const handleDelete = () => {
-    dispatch(deleteTodo({ id }));
+    // dispatch(deleteTodo({ id }));
+    dispatch(deleteTodoAsync({ id }));
   };
   return (
     <li className={`border mb-4 px-2 ${completed && "bg-green-600"}`}>

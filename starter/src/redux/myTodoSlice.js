@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { nanoid } from "nanoid";
 
 // use createAsyncThunk to create the middleware for making api calls
 
@@ -30,7 +31,7 @@ export const addTodoAsync = createAsyncThunk(
 
 // toogle todo on api
 export const toggleCompleteAsync = createAsyncThunk(
-	'todos/completeTodoAsync',
+  "todos/completeTodoAsync",
   async (payload) => {
     const response = await fetch(`http://localhost:7000/todos/${payload.id}`, {
       method: "PATCH",
@@ -40,6 +41,19 @@ export const toggleCompleteAsync = createAsyncThunk(
     if (response.ok) {
       const todo = await response.json();
       return { todo };
+    }
+  }
+);
+
+// delete todo in api
+export const deleteTodoAsync = createAsyncThunk(
+  "todos/deleteTodoAsync",
+  async (payload) => {
+    const response = await fetch(`http://localhost:7000/todos/${payload.id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      return { id: payload.id };
     }
   }
 );
@@ -56,7 +70,7 @@ export const myTodoSlice = createSlice({
   reducers: {
     addTodo: (state, action) => {
       const todo = {
-        id: new Date(),
+        id: nanoid(),
         title: action.payload.title,
         completed: false,
       };
@@ -82,8 +96,13 @@ export const myTodoSlice = createSlice({
     },
 
     [toggleCompleteAsync.fulfilled]: (state, action) => {
-      const index = state.findIndex((todo) => todo.id === action.payload.id);
+      const index = state.findIndex(
+        (todo) => todo.id === action.payload.todo.id
+      );
       state[index].completed = action.payload.todo.completed;
+    },
+    [deleteTodoAsync.fulfilled]: (state, action) => {
+      return state.filter((todo) => todo.id !== action.payload.id);
     },
   },
 });
