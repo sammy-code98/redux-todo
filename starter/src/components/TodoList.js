@@ -1,9 +1,16 @@
-import React from "react";
+import { useEffect } from "react";
 import TodoItem from "./TodoItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getTodoAsync } from "../redux/myTodoSlice";
 
 const TodoList = () => {
   const todos = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
+
+  // now dipatch the api call here
+  useEffect(() => {
+    dispatch(getTodoAsync());
+  },[dispatch]);
 
   // const todos = [
   //   { id: 1, title: "todo1", completed: true },
