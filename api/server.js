@@ -15,27 +15,27 @@ app.use(json());
 let todos = [
 	{
 		id: nanoid(),
-		title: 'todo 1',
+		title: 'Work out',
 		completed: true,
 	},
 	{
 		id: nanoid(),
-		title: 'todo 2',
+		title: 'Eat breakfast',
 		completed: false,
 	},
 	{
 		id: nanoid(),
-		title: 'todo 3',
+		title: 'Do my laundry',
 		completed: false,
 	},
 	{
 		id: nanoid(),
-		title: 'todo 4',
+		title: 'Code for 4 hours',
 		completed: false,
 	},
 	{
 		id: nanoid(),
-		title: 'todo 5',
+		title: 'Netflix and chill',
 		completed: false,
 	},
 ];
