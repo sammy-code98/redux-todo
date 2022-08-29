@@ -28,6 +28,22 @@ export const addTodoAsync = createAsyncThunk(
   }
 );
 
+// toogle todo on api
+export const toggleCompleteAsync = createAsyncThunk(
+	'todos/completeTodoAsync',
+  async (payload) => {
+    const response = await fetch(`http://localhost:7000/todos/${payload.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: payload.completed }),
+    });
+    if (response.ok) {
+      const todo = await response.json();
+      return { todo };
+    }
+  }
+);
+
 export const myTodoSlice = createSlice({
   name: "todos",
   initialState: [
@@ -63,6 +79,11 @@ export const myTodoSlice = createSlice({
     },
     [addTodoAsync.fulfilled]: (state, action) => {
       state.push(action.payload.todo);
+    },
+
+    [toggleCompleteAsync.fulfilled]: (state, action) => {
+      const index = state.findIndex((todo) => todo.id === action.payload.id);
+      state[index].completed = action.payload.todo.completed;
     },
   },
 });
